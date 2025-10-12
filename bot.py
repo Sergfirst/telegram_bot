@@ -1,4 +1,5 @@
 import logging
+import os
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 
@@ -10,9 +11,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # ===== КОНФИГУРАЦИЯ =====
-import os
-TOKEN = os.getenv("RAILWAY_BOT_TOKEN")
-SUPPORT_NICKNAME = "@zuzihelp"  # Замените на никнейм техподдержки
+TOKEN = os.getenv("RAILWAY_BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
+SUPPORT_NICKNAME = "@support_nickname"  # Замените на никнейм техподдержки
 PDF_INSTRUCTION = "instruction.pdf"  # Путь к файлу инструкции
 PDF_BOOK = "book.pdf"  # Путь к файлу книги
 
@@ -25,11 +25,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 📚 Вот доступные команды:
 
-/инструкция - Отправляет инструкцию по использованию бота (PDF файл)
+/instruction - Отправляет инструкцию по использованию бота (PDF файл)
 
-/книга - Отправляет справочную книгу (PDF файл)
+/book - Отправляет справочную книгу (PDF файл)
 
-/связь - Показывает контакт техподдержки
+/support - Показывает контакт техподдержки
 
 Для использования команды просто напишите её в чат.
     """
@@ -37,7 +37,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def instruction(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Обработчик команды /инструкция"""
+    """Обработчик команды /instruction"""
     try:
         with open(PDF_INSTRUCTION, 'rb') as f:
             await update.message.reply_document(
@@ -56,7 +56,7 @@ async def instruction(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
 
 
 async def book(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Обработчик команды /книга"""
+    """Обработчик команды /book"""
     try:
         with open(PDF_BOOK, 'rb') as f:
             await update.message.reply_document(
@@ -75,7 +75,7 @@ async def book(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def support(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Обработчик команды /связь"""
+    """Обработчик команды /support"""
     message = f"""
 📞 Свяжитесь с технической поддержкой:
 
@@ -92,9 +92,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 📚 Доступные команды:
 
 /start - Показать приветствие и инструкцию
-/инструкция - Отправить PDF инструкцию
-/книга - Отправить PDF книгу
-/связь - Показать контакт поддержки
+/instruction - Отправить PDF инструкцию
+/book - Отправить PDF книгу
+/support - Показать контакт поддержки
 /help - Показать эту справку
     """
     await update.message.reply_text(help_text)
@@ -109,9 +109,9 @@ def main() -> None:
 
     # Добавляем обработчики команд
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("инструкция", instruction))
-    app.add_handler(CommandHandler("книга", book))
-    app.add_handler(CommandHandler("связь", support))
+    app.add_handler(CommandHandler("instruction", instruction))
+    app.add_handler(CommandHandler("book", book))
+    app.add_handler(CommandHandler("support", support))
     app.add_handler(CommandHandler("help", help_command))
 
     # Запускаем бота
