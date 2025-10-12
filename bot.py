@@ -10,7 +10,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # ===== КОНФИГУРАЦИЯ =====
-TOKEN = "8410794189:AAF7u_FN_j7KSZfjtt98xHVEnPmdhFq9xEU"  # Замените на токен вашего бота
+import os
+TOKEN = os.getenv("RAILWAY_BOT_TOKEN")
 SUPPORT_NICKNAME = "@zuzihelp"  # Замените на никнейм техподдержки
 PDF_INSTRUCTION = "instruction.pdf"  # Путь к файлу инструкции
 PDF_BOOK = "book.pdf"  # Путь к файлу книги
