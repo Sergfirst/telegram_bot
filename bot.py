@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 # ===== КОНФИГУРАЦИЯ =====
 TOKEN = os.getenv("RAILWAY_BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
-SUPPORT_NICKNAME = "@support_nickname"  # Замените на никнейм техподдержки
+SUPPORT_NICKNAME = "@zuzihelp"  # Замените на никнейм техподдержки
 PDF_INSTRUCTION = "instruction.pdf"  # Путь к файлу инструкции
 PDF_BOOK = "book.pdf"  # Путь к файлу книги
 
